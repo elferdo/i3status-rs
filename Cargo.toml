@@ -1,0 +1,9 @@
+[package]
+name = "i3status"
+version = "0.1.0"
+authors = ["Jashank Jeremy <jashank@rulingia.com>"]
+
+[dependencies]
+libc = "*"
+rustc-serialize = "*"
+time = "*"
