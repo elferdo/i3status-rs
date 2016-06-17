@@ -55,14 +55,10 @@ fn i3b_clock() -> I3BarBlock {
     }
 }
 
-extern {
-    fn getloadavg(lavg: *mut c_double, lavg_len: c_int);
-}
-
 fn i3b_loadavg() -> I3BarBlock {
     let load_averages: [f64; 3] = unsafe {
         let mut lavgs: [c_double; 3] = [0f64, 0f64, 0f64];
-        getloadavg(lavgs.as_mut_ptr(), 3);
+        libc::getloadavg(lavgs.as_mut_ptr(), 3);
         lavgs
     };
 
@@ -70,8 +66,13 @@ fn i3b_loadavg() -> I3BarBlock {
         full_text: format!("{:.2}:{:.2}:{:.2}",
                            load_averages[0], load_averages[1],
                            load_averages[2]).to_string(),
-        color: color(0xff, 0xff, 0xff).to_string(),
-    } 
+        color:
+            if load_averages[0] > 4f64 {
+                color(0xff, 0x00, 0x00)
+            } else {
+                color(0xff, 0xff, 0xff)
+            }.to_string(),
+    }
 }
 
 fn main() {
