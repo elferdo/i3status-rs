@@ -37,7 +37,7 @@ struct I3BarBlock {
 struct Color { r: u8, g: u8, b: u8 }
 impl ToString for Color {
     fn to_string(&self) -> String {
-        format!("#{:x}{:x}{:x}", self.r, self.g, self.b).to_string()
+        format!("#{:02x}{:02x}{:02x}", self.r, self.g, self.b).to_string()
     }
 }
 
